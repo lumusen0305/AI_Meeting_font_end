@@ -1,0 +1,155 @@
+@font-face {
+    font-family: LED;
+    src: url("../../../../assets/font/SFDigitalReadout-Heavy.ttf")
+  }
+.container{
+    margin-top: 7vh;
+    width: 100%;
+}
+.air{
+    margin: 0 auto;
+    width: 100%;
+    height: 18vh;
+    border: 2px solid rgb(255, 255, 255);
+	box-shadow: 0 0 20px rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 10px 10px 0 0;
+    filter: drop-shadow(0 2px 4px rgb(145, 145, 145));
+}
+.air::after{
+    content: '';
+    border: 2px solid rgb(255, 255, 255);
+	box-shadow: 0 0 20px rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.15);
+    position: absolute;
+    bottom: -4vh;
+    left: -0.2%;
+    height: 4vh;
+    width: 100.4%;
+    /* background-color: rgb(255, 255, 255); */
+    border-radius: 0 0 20px 20px;
+}
+.picture{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 65px;
+    border-radius: 5px;
+}
+.pattern{
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    transition: all 0.3s;
+}
+.lable{
+    display: table;
+    margin: 0 auto;
+    margin-top: 10%;
+}
+.controller_font{
+    border: 2px solid rgb(255, 255, 255);
+	box-shadow: 0 0 20px rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    font-family: "LED";
+    font-size: 4vh;
+    text-shadow: 0 0 10px  rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    display: flex;
+    width: 6vh;
+    height: 6vh;
+}
+.controller_switch{
+    border: 2px solid rgb(255, 0, 0);
+	box-shadow: 0 0 20px rgb(255, 145, 145);
+    background-color: rgba(255, 0, 0, 0.15);
+    border-radius: 50%;
+    font-family: "LED";
+    font-size: 4vh;
+    text-shadow: 0 0 10px  rgb(255, 0, 0);
+    color: rgb(255, 0, 0);
+    display: flex;
+    width: 6vh;
+    height: 6vh;
+}
+.controller_font_snow{
+    border: 2px solid rgb(0, 145, 255);
+	box-shadow: 0 0 20px rgb(0, 145, 255);
+    background-color: rgba(0, 145, 255, 0.15);
+    border-radius: 50%;
+    font-family: "LED";
+    font-size: 4vh;
+    text-shadow: 0 0 10px  rgb(0, 145, 255);
+    color: rgb(0, 145, 255);
+    display: flex;
+    width: 6vh;
+    height: 6vh;   
+}
+.controller_font_sun{
+    border: 2px solid rgb(255, 166, 0);
+	box-shadow: 0 0 20px rgb(255, 196, 141);
+    background-color: rgba(255, 111, 0, 0.15);
+    border-radius: 50%;
+    font-family: "LED";
+    font-size: 4vh;
+    text-shadow: 0 0 10px  rgb(255, 172, 90);
+    color: rgb(255, 189, 90);
+    display: flex;
+    width: 6vh;
+    height: 6vh;
+}
+
+.led_font{
+    /* 引用LED字体 */
+    font-family: "LED";
+    font-size: 7vh;
+    text-shadow: 0 0 10px  rgb(0, 255, 208);
+    color: rgb(224, 247, 255);
+    display: flex;
+    width: 100%;
+    align-items: center; 
+    text-align: right;
+    transition: all 0.3s;
+    margin-left: 80%;
+    
+}
+.led_controller_font{
+    /* 引用LED字体 */
+    font-family: "LED";
+    font-size: 6vh;
+    text-shadow: 0 0 10px  rgb(0, 255, 208);
+    color: rgb(224, 247, 255);
+    display: flex;
+    width: 80%;
+    align-items: center; 
+    text-align: right;
+
+    border: 2px solid rgb(255, 255, 255);
+	box-shadow: 0 0 20px rgb(255, 255, 255);
+    background-color: rgba(0, 211, 244, 0.109);
+
+    transition: all 0.3s;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+.controller{
+    margin-top: 7vh;
+    height: 40vh;
+    border: 2px solid rgb(255, 255, 255);
+	box-shadow: 0 0 20px rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.15);
+	border-radius: 10px 10px 10px 10px;
+}
+.controller_button{
+    margin-top: 10%;
+    height: 65%;
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: #ffffff; */
+}
+/* ======================== */
