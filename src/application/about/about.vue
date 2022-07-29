@@ -181,7 +181,7 @@ export default {
       console.log(this.userName);
       axios({
         method: 'post',
-        baseURL: 'http://0.0.0.0:12345',
+        baseURL: 'http://174.138.28.25:12345',
         url: '/account/login',
         headers: {
           'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ export default {
     sendRegister() {
       axios({
         method: 'post',
-        baseURL: 'http://0.0.0.0:12345',
+        baseURL: 'http://174.138.28.25:12345',
         url: '/account/register',
         headers: {
           'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ export default {
     sendVerfied(){
       axios({
         method: 'post',
-        baseURL: 'http://0.0.0.0:12345',
+        baseURL: 'http://174.138.28.25:12345',
         url: '/account/verification',
         headers: {
           'Content-Type': 'application/json',

@@ -152,7 +152,7 @@ export default {
     getRoomData(){
       axios({
         method: 'post',
-        baseURL: 'http://0.0.0.0:12345',
+        baseURL: 'http://174.138.28.25:12345',
         url: '/user/getRooms',
         headers: {
           Authorization: `Bearer `+this.$cookies.get('jwt-tocken')

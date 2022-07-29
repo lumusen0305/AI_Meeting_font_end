@@ -1,7 +1,7 @@
 import Vue from "vue";
 import store from '../store';
 
-const wsUrl ="ws://0.0.0.0:12345/ws/";
+const wsUrl ="ws://174.138.28.25:12345/ws/";
 var socket;
 const emitter = new Vue({
     methods: {
