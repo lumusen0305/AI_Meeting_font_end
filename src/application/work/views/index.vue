@@ -116,7 +116,9 @@ export default {
       return "#" + this.ColorToHex(red) + this.ColorToHex(green) + this.ColorToHex(blue);
     },
     goToRoom(item){
-      this.$store.state.room=item
+      this.$store.state.room=item;
+      console.log(item);
+      console.log(this.$store.state.room.roomid);
       this.$router.push('/Room');
     },
     randomRgb(item) {

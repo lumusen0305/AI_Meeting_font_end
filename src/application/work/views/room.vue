@@ -20,7 +20,7 @@
                         </a-col>
                         <a-col :span="3" :offset="2">
                           <span class="people_font">
-                            10
+                            {{this.$store.state.person}}
                         </span>
                         </a-col>
                     </a-row>
@@ -29,7 +29,7 @@
               <a-col :span="7" :offset="1" >
               <div class="bulb_board" @click="change_bulb">
                     <a-row > 
-                        <div v-if="bulb_status===0">
+                        <div v-if="this.$store.state.bulb.status===0">
                             <a-col :span="5" :offset="1">
                                     <a-icon class="bulb_icon" type="bulb" theme="filled" />
                               </a-col>
@@ -37,7 +37,7 @@
                                 turn on
                             </span>
                         </div>
-                      <div v-else-if="bulb_status === 1">
+                      <div v-else-if="this.$store.state.bulb.status === 1">
                         <a-col :span="5" :offset="1">
                           <a-icon class="bulb_icon" type="bulb" />
                         </a-col>
@@ -60,7 +60,7 @@
               <a-col :span="7" :offset="1" >
               <div class="door_board" @click="change_door">
                     <a-row > 
-                        <div v-if="door_status=== 0">
+                        <div v-if=" this.$store.state.door.status=== 0">
                             <a-col :span="5" :offset="0">
                                     <a-icon class="door_icon" type="import"/>
                               </a-col>
@@ -68,7 +68,7 @@
                                 turn on
                             </span>
                         </div>
-                      <div v-else-if="door_status === 1">
+                      <div v-else-if=" this.$store.state.door.status === 1">
                         <a-col :span="5" :offset="1">
                           <a-icon class="door_icon" type="lock" />
                         </a-col>
@@ -145,50 +145,61 @@ name: "index",
           "address":"402台中市南區興大路145號",
         },
       ],
-      bulb_status:0,
-      door_status:0,
-      roomid:this.$store.state.room.roomid
     };
   },
     methods: {
         change_bulb() {
-          console.log(this.roomid);
-          this.bulb_status = this.bulb_status+1;
-          if (this.bulb_status==2){
-            this.bulb_status=0;
+          console.log(this.$store.state.room.roomid);
+          this.$store.state.bulb.status =  this.$store.state.bulb.status+1;
+          if ( this.$store.state.bulb.status==3){
+             this.$store.state.bulb.status=0;
           }
-          if (this.bulb_status==0){
+          if ( this.$store.state.bulb.status==0){
             Socket.send(
                 {
-                  "Msg":"turn on bulb",
-                  "Roomid":this.roomid
+                  "Msg":"{'device':'bulb','status':0}",
+                  "Roomid":this.$store.state.room.roomid
+                });
+          }
+          else if ( this.$store.state.bulb.status==1){
+            Socket.send(
+                {
+                  "Msg":"{'device':'bulb','status':1}",
+                  "Roomid":this.$store.state.room.roomid
                 });
           }
           else {
             Socket.send(
                 {
-                  "Msg":"turn off bulb",
-                  "Roomid":this.roomid
+                  "Msg":"{'device':'bulb','status':2}",
+                  "Roomid":this.$store.state.room.roomid
                 });
           }
         },
         change_door() {
-          this.door_status = this.door_status+1;
-          if (this.door_status==2){
-            this.door_status=0;
+           this.$store.state.door.status =  this.$store.state.door.status+1;
+          if ( this.$store.state.door.status==3){
+             this.$store.state.door.status=0;
           }
-          if (this.door_status==0){
+          if ( this.$store.state.door.status==0){
             Socket.send(
                 {
-                  "Msg":"open door",
-                  "Roomid":this.roomid
+                  "Msg":"{'device':'door','status':0}",
+                  "Roomid":this.$store.state.room.roomid
+                });
+          }
+          else if ( this.$store.state.door.status==1){
+            Socket.send(
+                {
+                  "Msg":"{'device':'door','status':1}",
+                  "Roomid":this.$store.state.room.roomid
                 });
           }
           else {
             Socket.send(
                 {
-                  "Msg":"close door",
-                  "Roomid":this.roomid
+                  "Msg":"{'device':'door','status':2}",
+                  "Roomid":this.$store.state.room.roomid
                 });
           }
         },

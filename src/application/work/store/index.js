@@ -11,6 +11,9 @@ export default new Vuex.Store({
         username:{},
         room:{},
         id:{},
+        bulb:{"status":0},
+        door:{"status":0},
+        person:0
     },
     mutations: {
         //當接收到最新的後端送來的websocket資訊，直接存到state中的wsNotify
