@@ -9,17 +9,20 @@ let pages = {
     entry: 'src/application/about/about.js',
     template: 'src/application/about/about.html',
     filename: 'about.html',
-    title: 'Index Page1',
+    title: 'Index Page',
   },
   work: {
     entry: 'src/application/work/work.js',
     template: 'src/application/work/work.html',
     filename: 'work.html',
-    title: 'Index Page1',
+    title: 'work Page',
   }
 }
 module.exports = {
   lintOnSave: false,
+  devServer: {
+    host:"127.0.0.1"
+  },
   // 应用的架设路径，CLI默认你的项目部署在域名的根目录下所以publicPath默认为/
   publicPath: '/',
   // 构建后的文件是否启用哈希命名
@@ -27,6 +30,7 @@ module.exports = {
   // 是否在save文件时lint代码, 需要先安装cli-plugin-eslint
   // lintOnSave: process.env.NODE_ENV !== 'production',
   productionSourceMap: process.env.NODE_ENV !== 'production',
+
   chainWebpack: config => {
     // config.plugins.delete('prefetch-admin')
     config.resolve.alias
