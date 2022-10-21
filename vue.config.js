@@ -20,9 +20,8 @@ let pages = {
 }
 module.exports = {
   lintOnSave: false,
-  devServer: {
-    host:"127.0.0.1"
-  },
+
+
   // 应用的架设路径，CLI默认你的项目部署在域名的根目录下所以publicPath默认为/
   publicPath: '/',
   // 构建后的文件是否启用哈希命名

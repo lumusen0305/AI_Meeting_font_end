@@ -3,13 +3,25 @@
   <div class="outside">
   <div class="menu cyberpunk" >
     <div class="silder_bar_title">
-      設定
+      SETTING
     </div>
     <hr>
     <div class="silder_bar_wrap ">
-    <button type="button" class="silder_bar_context ghost-button"  v-for="item in setting_data"> 
-         {{item}}
-  </button>
+      <button type="button" class="silder_bar_context ghost-button" @click="jumpToHome" >
+        Home
+      </button>
+      <button type="button" class="silder_bar_context ghost-button"   @click="jumpToSetting">
+        Setting
+      </button>
+      <button type="button" class="silder_bar_context ghost-button"   @click="showAddRoom">
+        Add Meeting Room
+      </button>
+      <button type="button" class="silder_bar_context ghost-button"  @click="showRemoveRoom" >
+        Remove Meeting Room
+      </button>
+      <button type="button" class="silder_bar_context ghost-button" @click="sign_out" >
+        Sign Out
+      </button>
     </div>
 </div>
 </div>
@@ -42,11 +54,35 @@
     <a-back-top />
     <strong style="color: rgba(64, 64, 64, 0.6)">  </strong>
   </div>
+  <a-modal v-model="addRoomVisible" title="Add Room" ok-text="Enter" cancel-text="Cancel" @ok="addRoom" >
+    <a-input ref="userNameInput" v-model="add_room" placeholder="Input Room ID">
+      <a-icon slot="prefix" type="plus" />
+    </a-input>
+  </a-modal>
+
+  <a-modal v-model="removeRoomVisible"  title="Remove Room" ok-text="Enter" cancel-text="Cancel" @ok="removeRoom" >
+    <a-select v-model:value="roomInfo"    style="width: 100%"  @change='handleChange'>
+      <a-select-option v-for="(item, index) in this.$store.state.roomList"  :value="index" :key="index">
+        {{item.roomName}}
+      </a-select-option>
+    </a-select>
+  </a-modal>
 </div>
+
 </template>
 
 <style>
-
+.ant-modal {
+  max-width: 100%;
+  margin-top: 11%;
+}
+.ant-modal-content {
+  display: flex;
+  flex-direction: column;
+}
+.ant-modal-body {
+  flex: 1;
+}
 .silder_bar_wrap{
     /* display: flex; */
     height: 35vh;
@@ -157,22 +193,29 @@ hr {
 </style>
 <script>
 import bus from './bus';
+import indexPage from "../views/index";
+import axios from "axios";
+
 export default {
   data() {
     return {
       visible: false,
+      addRoomVisible: false,
       registerVisible:false,
+      removeRoomVisible:false,
       i : 0,
       isTop: true,
-      setting_data:[
-        "首頁","控制頁面", "修改個人資料","添加會議室","移除會議室","登出"
-      ]
+      roomInfo:0,
+      add_room:"",
     };
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll, true);
   },
   methods: {
+    handleChange(e){
+      console.log(e);
+    },
       randomRgb(item) {
         let R = Math.floor(Math.random() * 255);
         let G = Math.floor(Math.random() * 255);
@@ -183,6 +226,95 @@ export default {
           border:' 1px solid '+ 'rgb(' + R + ',' + G + ',' + B + ')'
         };
       },
+    jumpToHome(){
+      document.location.href = "/about#";
+    },
+    sign_out(){
+      this.$cookies.remove('jwt-tocken');
+      this.jumpToHome();
+    },
+    showAddRoom(){
+      this.addRoomVisible = true;
+    },
+    showRemoveRoom(){
+      this.removeRoomVisible = true;
+    },
+    addRoom(){
+      console.log(this.add_room)
+      axios({
+        method: 'post',
+        baseURL: 'http://0.0.0.0:12345',
+        url: '/account/addRooms',
+        headers: {
+          Authorization: `Bearer `+this.$cookies.get('jwt-tocken')
+        },
+        data: {
+          "roomid": this.add_room
+        },
+      }).then((response) => {
+        this.$store.state.roomList=[]
+        this.getRoomData();
+        this.$message.success('添加成功');
+        this.addRoomVisible=false;
+      }).catch((err) => {
+        console.log(err)
+        this.$message.error('添加失敗');
+      })
+    },
+    removeRoom(){
+      console.log(this.$store.state.roomList[this.roomInfo])
+      axios({
+        method: 'post',
+        baseURL: 'http://0.0.0.0:12345',
+        url: '/account/removeRooms',
+        headers: {
+          Authorization: `Bearer `+this.$cookies.get('jwt-tocken')
+        },
+        data: {
+          "roomid":this.$store.state.roomList[this.roomInfo].roomid,
+        },
+      }).then((response) => {
+        this.$message.success('刪除成功');
+        this.$store.state.roomList.splice(this.roomInfo,1)
+        this.removeRoomVisible=false;
+      })
+          .catch((err) => {
+            this.$message.error('刪除失敗');
+          })
+    },
+    getRoomData(){
+      axios({
+        method: 'post',
+        baseURL: 'http://0.0.0.0:12345',
+        url: '/user/getRooms',
+        headers: {
+          Authorization: `Bearer `+this.$cookies.get('jwt-tocken')
+        }
+      }).then((response) => {
+        console.log(response.data.data)
+        response.data.data.forEach(item => {
+          this.$store.state.roomList.push(
+              {
+                roomid : item.roomid,
+                roomName : item.roomName,
+                roomOffice :item.roomOffice,
+                address:item.address,
+              })
+          // this.room.push(
+          //     {
+          //       roomid : item.roomid,
+          //       roomName : item.roomName,
+          //       roomOffice :item.roomOffice,
+          //       address:item.address,
+          //     })
+        });
+
+      })
+          .catch((err) => {
+            console.log(err);
+            // this.$message.error('帳號密碼錯誤');
+          })
+    },
     handleScroll(){
       // 頁面滾動距頂部距離
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 
@@ -225,6 +357,9 @@ export default {
     hideRegister() {
       this.registerVisible = false;
     },
+    jumpToSetting(){
+
+    }
   },
   
 };

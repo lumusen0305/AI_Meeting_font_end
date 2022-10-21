@@ -25,7 +25,7 @@
         </div>
       </div>
       <div>
-        <a-row v-for="item in this.room"  >
+        <a-row v-for="item in this.$store.state.roomList"  >
           <a-col :span="7" :offset="0"  style="margin-right:3vh;" >
             <div class="meet_room btn" :style="randomRgb(item)"  v-on:click="goToRoom(item)">
               <div class="room_title ">
@@ -41,7 +41,7 @@
     </div>
     <a-row>
 
-      <a-col :span="24" >
+      <a-col :span="24" class="bottom">
         <div class="bottom_introduce">
           <div class="bottom_context">
             <a-row>
@@ -102,6 +102,7 @@ export default {
       value: 2,
       room:[],
       cities:["台北","高雄","新北","台中","台南","桃園"],
+      // cities:["Taipei","Kaohsiung","New Taipei","Taichung","Tainan","Taoyuan"],
       page : 1,
       isBottom: false,
       spinning: false
@@ -152,7 +153,7 @@ export default {
     getRoomData(){
       axios({
         method: 'post',
-        baseURL: 'http://174.138.28.25:12345',
+        baseURL: 'http://0.0.0.0:12345',
         url: '/user/getRooms',
         headers: {
           Authorization: `Bearer `+this.$cookies.get('jwt-tocken')
@@ -160,13 +161,20 @@ export default {
       }).then((response) => {
         console.log(response.data.data)
         response.data.data.forEach(item => {
-          this.room.push(
+          this.$store.state.roomList.push(
               {
                 roomid : item.roomid,
                 roomName : item.roomName,
                 roomOffice :item.roomOffice,
                 address:item.address,
               })
+          // this.room.push(
+          //     {
+          //       roomid : item.roomid,
+          //       roomName : item.roomName,
+          //       roomOffice :item.roomOffice,
+          //       address:item.address,
+          //     })
         });
 
       })
@@ -192,7 +200,7 @@ export default {
   color: #fff;
 }
 .hero {
-  font-family: GrandnessDemoRegular;
+  /*font-family: GrandnessDemoRegular;*/
   color: #fff;
   z-index: 2;
   filter: drop-shadow(0 1px 3px);
@@ -466,9 +474,8 @@ export default {
 }
 .stripe-btn {
   cursor: pointer;  /*鼠标悬停变小手*/
-
   margin-right:6vh;
-  width: 10vh;
+  /*width: 10vh;*/
   /* --primary: hsl(0, 100%, 50%); */
   --secondary: hsl(224, 20%, 17%);
   --text-shadow-thickness: 0.05ch;
@@ -476,7 +483,7 @@ export default {
   position: relative;
   padding: 0.5vh 2vh;
   border: 2px solid var(--primary);
-  font-size:2.5vh;
+  font-size:170%;
   font-family: "Poppins", sans-serif;
   color: var(--primary);
   text-transform: uppercase;

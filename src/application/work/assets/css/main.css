@@ -6,7 +6,10 @@
     font-family: dahot2;
     src: url("../../../../assets/font/MILLENNIA.TTF")
   }
-
+@font-face {
+  font-family: hero2;
+  src: url("../../../../assets/font/SFDigitalReadout-Heavy.ttf")
+}
   .title{
     font-size: 45px;
     font-family: dahot2;
@@ -90,16 +93,18 @@
 .meet_room:hover{
     transform: translateY(-5px);
 }
+.bottom{
+  margin-top: 23%;
+}
 .bottom_introduce{
-  height: 31vh;
-  margin-top: 20vh;
+  height: 34vh;
+  /*padding-top: 30vh;*/
   width: 100%;
   background-color: #1d2b34;
   color: rgb(254, 254, 254);
 
-
-  
 }
+
 .bottom_context{
   height: 75%;
   
@@ -150,7 +155,13 @@
   z-index: 2;
   filter: drop-shadow(0 1px 3px);
 }
-
+.hero2 {
+  font-family: hero2;
+  color: #fff;
+  z-index: 2;
+  filter: drop-shadow(0 1px 3px);
+  font-size:7vh ;
+}
 .paths {
   animation: paths 5s step-end infinite;
 }

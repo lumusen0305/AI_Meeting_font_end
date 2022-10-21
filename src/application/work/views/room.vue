@@ -2,7 +2,9 @@
 <div class="background">
           <div class="room_context">
             <nav class="contex_title">
-                <h2 class="hero paths">MEETING ROOM CONTROL</h2>
+                <h2 class="hero2 paths">
+                  {{this.$store.state.room.address}}
+                </h2>
             </nav>
             
             <div>
@@ -147,6 +149,18 @@ name: "index",
       ],
     };
   },
+  activated: function(){
+    Socket.send(
+        {
+          "Msg":"{'device':'bulb','status':3}",
+          "Roomid":this.$store.state.room.roomid
+        });
+    Socket.send(
+        {
+          "Msg":"{'device':'person','status':3}",
+          "Roomid":this.$store.state.room.roomid
+        });
+    },
     methods: {
         change_bulb() {
           console.log(this.$store.state.room.roomid);

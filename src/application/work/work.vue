@@ -25,7 +25,7 @@
         getUserData(){
           axios({
             method: 'post',
-            baseURL: 'http://174.138.28.25:12345',
+            baseURL: 'http://0.0.0.0:12345',
             url: '/account/member/profile',
             headers: {
               Authorization: `Bearer `+this.$cookies.get('jwt-tocken')
@@ -39,6 +39,7 @@
           })
               .catch((err) => {
                 console.log(err);
+
                 // this.$message.error('帳號密碼錯誤');
               })
         },

@@ -21,6 +21,7 @@ import { BackTop} from 'ant-design-vue';
 import { Spin} from 'ant-design-vue';
 import { Statistic} from 'ant-design-vue';
 import { Slider} from 'ant-design-vue';
+import { message} from 'ant-design-vue';
 
 import store from './store';
 import VueCookies from "vue-cookies";
@@ -33,6 +34,7 @@ Vue.use(Spin);
 Vue.use(BackTop);
 Vue.use(Rate);
 Vue.use(Carousel);
+Vue.use(message);
 Vue.use(Input);
 Vue.use(Select);
 Vue.use(Modal);
@@ -46,7 +48,12 @@ Vue.use(Statistic);
 Vue.use(Slider);
 
 Vue.use(VueCookies, { expire: '2d'});
-
+Vue.prototype.$message = message;
+message.config({
+    duration: 2,// 持续时间
+    top:`10%`, // 到页面顶部距离
+    maxCount: 3 // 最大显示数, 超过限制时，最早的消息会被自动关闭
+});
 new Vue({
     router,
     store,

@@ -5,7 +5,9 @@
       <a-layout-header>
           <a-row>
             <a-col :span="1" :offset="15">
+              <a href="https://github.com/lumusen0305">
               <a-icon class="icon" type="github"/>
+              </a>
             </a-col>
             <a-col :span="1" :offset="1">
               <a-icon class="icon" type="android" theme="filled" />
@@ -14,7 +16,7 @@
             <a-col :span="1" :offset="1">
               <div @click="showModal" class="login_style">
                 <a-icon type="user" class="icon"/>
-                <a-modal v-model="visible" title="Login" ok-text="確認"  cancel-text="取消" @ok="hideModal">
+                <a-modal v-model="visible" title="Login" ok-text="Enter"  cancel-text="Cancel" @ok="hideModal">
                   <div>
                     <div class="login">
                       <a-input ref="userNameInput" v-model="account" placeholder="Your account">
@@ -30,9 +32,9 @@
 
                       <div name="register">
                         <a @click="showRegister">
-                          沒有帳號？...
+                          Don't Have Account？...
                         </a>
-                        <a-modal v-model="registerVisible" title="Register" ok-text="確認" cancel-text="取消" @ok="sendRegister">
+                        <a-modal v-model="registerVisible" title="Register" ok-text="Enter" cancel-text="Cancel" @ok="sendRegister">
                           <a-input ref="userNameInput" v-model="userName" placeholder="Register Your username">
                             <a-icon slot="prefix" type="user" />
                           </a-input>
@@ -134,7 +136,7 @@
             </nav>
             </div>
               <div class="siber_btn">
-              <button class="btn"  @click="showModal" >Start</button>
+              <button class="btn"  @click="login_room" >Start</button>
             </div>
             
           </div>
@@ -150,38 +152,40 @@ import axios from "axios";
 export default {
   data() {
     return {
-      account:"lumusen0305",
-      userName:"lumusen",
-      password:"guitar0305",
-      email:"lumusen890305@gmail.com",
+      account:"",
+      // lumusen0305
+      userName:"",
+      // lumusen
+      password:"",
+      // guitar0305
+      email:"",
+      // lumusen890305@gmail.com
       verification:"",
       visible: false,
       registerVisible:false,
     };
   },
-  created() {
-    window.onresize = () => {
-      fun()
-      // 重置 animation 保证变量加载
-      this.$refs.bg.classList.remove('animation')
-      setTimeout(() => {
-        this.$refs.bg.classList.add('animation')
-      }, 100)
-    }
-    fun()
-  },
   methods: {
     showIntroduce(){
       document.location.href = "/about";
     },
+
     showModal() {
       this.visible = true;
+    },
+    login_room(){
+      if (this.$cookies.get('jwt-tocken')){
+        this.jumpToIndex()
+      }
+      else{
+        this.showModal();
+      }
     },
     hideModal() {
       console.log(this.userName);
       axios({
         method: 'post',
-        baseURL: 'http://174.138.28.25:12345',
+        baseURL: 'http://0.0.0.0:12345',
         url: '/account/login',
         headers: {
           'Content-Type': 'application/json',
@@ -194,20 +198,20 @@ export default {
         console.log(response);
         this.visible = false;
         this.$cookies.set('jwt-tocken',response.data.token);
-        this.$message.success('歡迎登入'+this.account);
+        this.$message.success('Welcome'+this.account);
         this.jumpToIndex()
       })
           .catch((err) => {
             console.log(err)
-            this.$message.error('帳號密碼錯誤');
+            this.$message.error('Password or Account Error');
           })
     },
     confirm() {
       this.$confirm({
         title: 'Confirm',
         content: 'Bla bla ...',
-        okText: '確認',
-        cancelText: '取消',
+        okText: 'Enter',
+        cancelText: 'Cancel',
       });
     },
     jumpToWallpaper(){
@@ -223,7 +227,7 @@ export default {
     sendRegister() {
       axios({
         method: 'post',
-        baseURL: 'http://174.138.28.25:12345',
+       baseURL: 'http://0.0.0.0:12345',
         url: '/account/register',
         headers: {
           'Content-Type': 'application/json',
@@ -238,7 +242,7 @@ export default {
       }).then((response) => {
         console.log(response);
         this.visible = false;
-        this.$message.success('註冊成功請登入帳號');
+        this.$message.success('Register success');
         this.registerVisible = false;
       })
           .catch((err) => {
@@ -249,7 +253,7 @@ export default {
     sendVerfied(){
       axios({
         method: 'post',
-        baseURL: 'http://174.138.28.25:12345',
+       baseURL: 'http://0.0.0.0:12345',
         url: '/account/verification',
         headers: {
           'Content-Type': 'application/json',
@@ -263,11 +267,11 @@ export default {
       }).then((response) => {
         console.log(response);
         this.visible = false;
-        this.$message.success('發送成功請到'+this.email+'查看驗證碼');
+        this.$message.success('Success Send email to'+this.email);
       })
           .catch((err) => {
             console.log(err)
-            this.$message.error('請填寫完整再發送驗證');
+            this.$message.error('Please key in all data');
           })
     }
   },

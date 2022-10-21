@@ -1,7 +1,7 @@
 import Vue from "vue";
 import store from '../store';
 
-const wsUrl ="ws://174.138.28.25:12345/ws/";
+const wsUrl ="ws://188.166.209.73:12345/ws/";
 var socket;
 const emitter = new Vue({
     methods: {
@@ -17,11 +17,12 @@ const emitter = new Vue({
                 let context=JSON.parse(msg.data).context.replace(/'/g, '"');
                 context=JSON.parse(context);
                 // console.log("1231231231",store.state.room);
-                // console.log('12312312312');
-                if (store.state.room.roomid===JSON.parse(msg.data).roomId){
-                    // console.log(context);
+                if (store.state.room.roomid===JSON.parse(msg.data).Sender){
+                    console.log("bashdiuashdius");
                     if(context.device==="bulb") {
                         store.state.bulb.status = context.status;
+                        console.log("bulb:1231231");
+
                         // "Msg":"{'device':'door','status':2}",
                     };
                     if(context.device==="door") {

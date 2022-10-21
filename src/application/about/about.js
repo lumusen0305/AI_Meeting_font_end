@@ -11,7 +11,7 @@ import { Input } from 'ant-design-vue';
 import { Select } from 'ant-design-vue';
 import { Carousel} from 'ant-design-vue';
 import { message} from 'ant-design-vue';
-import VueCookies from 'vue-cookies'
+import VueCookies from 'vue-cookies';
 Vue.config.productionTip = false
 
 Vue.use(Carousel);

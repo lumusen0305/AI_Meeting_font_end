@@ -10,6 +10,7 @@ export default new Vuex.Store({
         account:{},
         username:{},
         room:{},
+        roomList:[],
         id:{},
         bulb:{"status":0},
         door:{"status":0},
